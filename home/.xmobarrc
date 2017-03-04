@@ -1,0 +1,18 @@
+Config { font = "xft:DejaVu Sans:Bold:size=8:antialias=true"
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = Top
+       , lowerOnStart = True
+       , commands = [ Run Weather "CYKF" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
+                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                    , Run BatteryP ["BAT0"] ["-t", "<acstatus>", "-L","10","-H","80","-l","red","-h","green", "--", "-O", "Charging", "-o", "Batt: <left>%"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run StdinReader
+                    , Run Com "xmbwifi" [] "wifi" 30
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% } <fc=#ee9a00>%date%</fc> { %cpu%  %memory%  %battery%  |  %wifi%  |  %CYKF% "
+       }
